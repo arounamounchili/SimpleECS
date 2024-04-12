@@ -16,21 +16,24 @@ namespace SimpleECS
         Entity(const Entity &) = default;
         Entity &operator=(const Entity &) = default;
 
-        IdType getId() const { return m_id; }
+        IdType GetId() const { return m_id; }
+        void Kill();
+        bool IsAlive() const;
 
-        bool operator==(const Entity &e) const { return getId() == e.getId(); }
-        bool operator!=(const Entity &e) const { return getId() != e.getId(); }
-        bool operator<(const Entity &e) const { return getId() < e.getId(); }
-        bool operator>(const Entity &e) const { return getId() > e.getId(); }
+        bool operator==(const Entity &e) const { return GetId() == e.GetId(); }
+        bool operator!=(const Entity &e) const { return GetId() != e.GetId(); }
+        bool operator<(const Entity &e) const { return GetId() < e.GetId(); }
+        bool operator>(const Entity &e) const { return GetId() > e.GetId(); }
 
+        // Component management
         template <typename T, typename... Args>
-        void addComponent(Args &&...args);
+        void AddComponent(Args &&...args);
         template <typename T>
-        void removeComponent() const;
+        void RemoveComponent() const;
         template <typename T>
-        bool hasComponent() const;
+        bool HasComponent() const;
         template <typename T>
-        T &getComponent() const;
+        T &GetComponent() const;
 
     private:
         IdType m_id;
@@ -47,22 +50,22 @@ namespace SimpleECS
     };
 
     template <typename T, typename... Args>
-    void Entity::addComponent(Args &&...args)
+    void Entity::AddComponent(Args &&...args)
     {
     }
 
     template <typename T>
-    void Entity::removeComponent() const
+    void Entity::RemoveComponent() const
     {
     }
 
     template <typename T>
-    bool Entity::hasComponent() const
+    bool Entity::HasComponent() const
     {
     }
 
     template <typename T>
-    T &Entity::getComponent() const
+    T &Entity::GetComponent() const
     {
     }
 }
