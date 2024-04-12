@@ -20,66 +20,33 @@ namespace SimpleECS
     class Pool : public AbstractPool
     {
     public:
-        Pool(int capacity = 100)
-        {
-            Resize(capacity);
-        }
+        Pool(int capacity = 100) { Resize(capacity); }
 
         virtual ~Pool() = default;
 
-        bool IsEmpty() const
-        {
-            return m_data.empty();
-        }
+        bool IsEmpty() const { return m_data.empty(); }
 
-        unsigned int GetSize() const
-        {
-            return m_data.site();
-        }
+        unsigned int GetSize() const { return m_data.site(); }
 
-        void Resize(int n)
-        {
-            m_data.resize(n);
-        }
+        void Resize(int n) { m_data.resize(n); }
 
-        void Set(IdType entittyId, T object)
-        {
-            m_data[entittyId] = object;
-        }
+        void Set(IdType entittyId, T object) { m_data[entittyId] = object; }
 
-        T& Get(IdType entityId)
-        {
-            return static_cast<T&>(m_data[entityId]);
-        }
+        T &Get(IdType entityId) { return static_cast<T &>(m_data[entityId]); }
 
-        void Add(T object)
-        {
-            m_data.push_back(object);
-        }
+        void Add(T object) { m_data.push_back(object); }
 
-        T& operator[](IdType entityId)
-        {
-            return m_data[entityId];
-        }
+        T &operator[](IdType entityId) { return m_data[entityId]; }
 
-        const T& operator[](IdType entityId) const
-        {
-            return m_data[entityId];
-        }
+        const T &operator[](IdType entityId) const { return m_data[entityId]; }
 
-        std::vector<T> GetData()
-        {
-            return m_data;
-        }
+        std::vector<T> GetData() { return m_data; }
 
-        void clear() override
-        {
-            m_data.clear();
-        }
+        void clear() override { m_data.clear(); }
 
     private:
         std::vector<T> m_data;
     };
-}  // namespace SimpleECS
+} // namespace SimpleECS
 
 #endif

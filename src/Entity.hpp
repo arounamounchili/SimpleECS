@@ -2,12 +2,13 @@
 #define ENTITY_HPP
 
 #include "Config.hpp"
-
-class World;
-class EntityManager;
+#include "Pool.hpp"
 
 namespace SimpleECS
 {
+    class World;
+    class EntityManager;
+
     class Entity
     {
     public:
