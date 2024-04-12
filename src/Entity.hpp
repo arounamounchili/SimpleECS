@@ -25,7 +25,7 @@ namespace SimpleECS
         bool operator<(const Entity &e) const { return GetId() < e.GetId(); }
         bool operator>(const Entity &e) const { return GetId() > e.GetId(); }
 
-        // Component management
+        /* Component management */
         template <typename T, typename... Args>
         void AddComponent(Args &&...args);
         template <typename T>
@@ -34,6 +34,14 @@ namespace SimpleECS
         bool HasComponent() const;
         template <typename T>
         T &GetComponent() const;
+
+        /* Tags the entity */
+        void Tag(std::string tag);
+        bool HasTag(std::string tag) const;
+
+        /* Adds the entity to a certains group */
+        void Group(std::string group);
+        void HasGroup(std::string group) const;
 
     private:
         IdType m_id;
