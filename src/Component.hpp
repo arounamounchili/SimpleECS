@@ -16,6 +16,7 @@ namespace SimpleECS
     };
 
     // Used to assign a unique id to a component type
+    template <typename T>
     struct Component : BaseComponent
     {
         // Returns the unique id of Component<T>
