@@ -9,8 +9,6 @@ namespace SimpleECS
     // Used to be able to assign unique ids to each component type
     struct BaseComponent
     {
-        using componentIdType = uint8_t;
-
     protected:
         static componentIdType nextId;
     };

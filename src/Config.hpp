@@ -6,6 +6,7 @@
 namespace SimpleECS
 {
     using EntityIdType = uint32_t;
+    using componentIdType = uint8_t;
 
     enum
     {

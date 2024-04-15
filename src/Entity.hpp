@@ -26,7 +26,6 @@ namespace SimpleECS
 
         EntityIdType GetId() const { return m_id; }
         void Kill();
-        bool IsAlive() const;
 
         bool operator==(const Entity &e) const { return GetId() == e.GetId(); }
         bool operator!=(const Entity &e) const { return GetId() != e.GetId(); }
@@ -51,11 +50,12 @@ namespace SimpleECS
 
         /* Adds the entity to a certains group */
         void Group(std::string group);
-        void HasGroup(std::string group) const;
+        bool HasGroup(std::string group) const;
 
     private:
         EntityIdType m_id;
         EntityManager *m_entityManager = nullptr;
+        friend class EntityManager;
     };
 
     class EntityManager
@@ -67,8 +67,6 @@ namespace SimpleECS
         Entity CreateEntity();
         void DestroyEntity(Entity e);
         void KillEntity(Entity e);
-        bool IsEntityAlive(Entity e) const;
-        Entity GetEntity(EntityIdType entittyId);
 
         /* Component management */
         template <typename T>
@@ -88,22 +86,23 @@ namespace SimpleECS
         bool HasTaggedEntity(std::string tag, Entity e) const;
         Entity GetEntityByTag(std::string tag);
 
-        /* Groupü management */
+        /* Group management */
         void GroupEntity(Entity e, std::string group);
         bool HasGroup(std::string group) const;
         bool HasEntityInGroup(std::string group, Entity e) const;
         std::vector<Entity> GetEntityGroup(std::string group);
 
     private:
-        std::vector<std::shared_ptr<AbstractPool>> componentPools;
-        std::vector<ComponentMask> componentMasks;
-        std::deque<EntityIdType> freeIds;
+        unsigned int m_numEntities;
+        std::vector<std::shared_ptr<AbstractPool>> m_componentPools;
+        std::vector<ComponentMask> m_componentMasks;
+        std::deque<EntityIdType> m_freeIds;
 
-        std::unordered_map<std::string, Entity> taggedEntities;
-        std::unordered_map<EntityIdType, std::string> entityTags;
+        std::unordered_map<std::string, Entity> m_taggedEntities;
+        std::unordered_map<EntityIdType, std::string> m_entityTags;
 
-        std::unordered_map<std::string, std::set<Entity>> groupedEntities;
-        std::unordered_map<EntityIdType, std::string> entityGroups;
+        std::unordered_map<std::string, std::set<Entity>> m_groupedEntities;
+        std::unordered_map<EntityIdType, std::string> m_entityGroups;
 
         World &m_world;
     };
@@ -144,20 +143,20 @@ namespace SimpleECS
         const auto componentId = Component<T>::GetId();
         const auto entityId = e.GetId();
 
-        if (entityId >= componentPools.size())
+        if (entityId >= m_componentPools.size())
         {
-            componentPools.resize(componentId + 1, nullptr);
+            m_componentPools.resize(componentId + 1, nullptr);
         }
 
-        if (!componentPools[componentId])
+        if (!m_componentPools[componentId])
         {
             std::shared_ptr<Pool<T>> newComponentPool = std::make_shared<Pool<T>>();
-            componentPools[componentId] = newComponentPool;
+            m_componentPools[componentId] = newComponentPool;
         }
 
-        std::shared_ptr<Pool<T>> componentPool = std::static_pointer_cast<Pool<T>>(componentPools[componentId]);
+        std::shared_ptr<Pool<T>> componentPool = std::static_pointer_cast<Pool<T>>(m_componentPools[componentId]);
         componentPool->set(entityId, component);
-        componentMasks[entityId].set(componentId);
+        m_componentMasks[entityId].set(componentId);
     }
 
     template <typename T, typename... Args>
@@ -172,7 +171,7 @@ namespace SimpleECS
     {
         const auto componentId = Component<T>::GetId();
         const auto entityId = e.GetId();
-        componentMasks[entityId] = set(componentId, false);
+        m_componentMasks[entityId] = set(componentId, false);
     }
 
     template <typename T>
@@ -180,7 +179,7 @@ namespace SimpleECS
     {
         const auto componentId = Component<T>::GetId();
         const auto entityId = e.GetId();
-        return componentMasks[entityId].test(componentId);
+        return m_componentMasks[entityId].test(componentId);
     }
     template <typename T>
     T &EntityManager::GetComponent(Entity e) const
@@ -188,7 +187,7 @@ namespace SimpleECS
         const auto componentId = Component<T>::GetId();
         const auto entityId = e.GetId();
 
-        auto componentPool = std::static_pointer_cast<Pool<T>>(componentPools[componentId]);
+        auto componentPool = std::static_pointer_cast<Pool<T>>(m_componentPools[componentId]);
         return componentPool->get(entityId);
     }
 }
