@@ -30,15 +30,15 @@ namespace SimpleECS
 
         void Resize(int n) { m_data.resize(n); }
 
-        void Set(IdType entittyId, T object) { m_data[entittyId] = object; }
+        void Set(EntityIdType entittyId, T object) { m_data[entittyId] = object; }
 
-        T &Get(IdType entityId) { return static_cast<T &>(m_data[entityId]); }
+        T &Get(EntityIdType entityId) { return static_cast<T &>(m_data[entityId]); }
 
         void Add(T object) { m_data.push_back(object); }
 
-        T &operator[](IdType entityId) { return m_data[entityId]; }
+        T &operator[](EntityIdType entityId) { return m_data[entityId]; }
 
-        const T &operator[](IdType entityId) const { return m_data[entityId]; }
+        const T &operator[](EntityIdType entityId) const { return m_data[entityId]; }
 
         std::vector<T> GetData() { return m_data; }
 

@@ -9,10 +9,10 @@ namespace SimpleECS
     // Used to be able to assign unique ids to each component type
     struct BaseComponent
     {
-        using componentIdType = uint8_t;
+        using componentEntityIdType = uint8_t;
 
     protected:
-        static componentIdType nextId;
+        static componentEntityIdType nextId;
     };
 
     // Used to assign a unique id to a component type
@@ -20,7 +20,7 @@ namespace SimpleECS
     struct Component : BaseComponent
     {
         // Returns the unique id of Component<T>
-        static componentIdType GetId()
+        static componentEntityIdType GetId()
         {
             static auto id = nextId++;
             return id;

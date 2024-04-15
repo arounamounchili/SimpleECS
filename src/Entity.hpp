@@ -20,11 +20,11 @@ namespace SimpleECS
     class Entity
     {
     public:
-        Entity(IdType id) : m_id{id} {};
+        Entity(EntityIdType id) : m_id{id} {};
         Entity(const Entity &) = default;
         Entity &operator=(const Entity &) = default;
 
-        IdType GetId() const { return m_id; }
+        EntityIdType GetId() const { return m_id; }
         void Kill();
         bool IsAlive() const;
 
@@ -54,7 +54,7 @@ namespace SimpleECS
         void HasGroup(std::string group) const;
 
     private:
-        IdType m_id;
+        EntityIdType m_id;
         EntityManager *m_entityManager = nullptr;
     };
 
@@ -68,7 +68,7 @@ namespace SimpleECS
         void DestroyEntity(Entity e);
         void KillEntity(Entity e);
         bool IsEntityAlive(Entity e) const;
-        Entity GetEntity(IdType entittyId);
+        Entity GetEntity(EntityIdType entittyId);
 
         /* Component management */
         template <typename T>
@@ -97,13 +97,13 @@ namespace SimpleECS
     private:
         std::vector<std::shared_ptr<AbstractPool>> componentPools;
         std::vector<ComponentMask> componentMasks;
-        std::deque<IdType> freeIds;
+        std::deque<EntityIdType> freeIds;
 
         std::unordered_map<std::string, Entity> taggedEntities;
-        std::unordered_map<IdType, std::string> entityTags;
+        std::unordered_map<EntityIdType, std::string> entityTags;
 
         std::unordered_map<std::string, std::set<Entity>> groupedEntities;
-        std::unordered_map<IdType, std::string> entityGroups;
+        std::unordered_map<EntityIdType, std::string> entityGroups;
 
         World &m_world;
     };

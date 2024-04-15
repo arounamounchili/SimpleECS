@@ -38,7 +38,7 @@ namespace SimpleECS
     bool EntityManager::IsEntityAlive(Entity e) const
     {
     }
-    Entity EntityManager::GetEntity(IdType entittyId)
+    Entity EntityManager::GetEntity(EntityIdType entittyId)
     {
     }
 

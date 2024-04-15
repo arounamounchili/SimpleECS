@@ -5,8 +5,14 @@
 
 namespace SimpleECS
 {
-    using IdType = uint32_t;
+    using EntityIdType = uint32_t;
 
-}  // namespace SimpleECS
+    enum
+    {
+        MAX_COMPONENTS = 64,
+        DEFAULT_POOL_SIZE = 100
+    };
+
+} // namespace SimpleECS
 
 #endif
