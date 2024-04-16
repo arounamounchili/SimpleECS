@@ -2,5 +2,5 @@
 
 namespace SimpleECS
 {
-    BaseComponent::ComponentIdType BaseComponent::nextId = 0;
+    ComponentIdType BaseComponent::nextId = 0;
 }
