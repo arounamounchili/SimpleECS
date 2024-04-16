@@ -94,7 +94,7 @@ namespace SimpleECS
 
     private:
         unsigned int m_numEntities;
-        std::vector<std::shared_ptr<AbstractPool>> m_componentPools;
+        std::vector<std::shared_ptr<BasePool>> m_componentPools;
         std::vector<ComponentMask> m_componentMasks;
         std::deque<EntityIdType> m_freeIds;
 

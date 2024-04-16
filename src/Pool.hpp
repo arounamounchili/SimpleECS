@@ -8,16 +8,16 @@
 namespace SimpleECS
 {
     // Requires to have a vector pools containing different object types
-    class AbstractPool
+    class BasePool
     {
     public:
-        virtual ~AbstractPool() = default;
+        virtual ~BasePool() = default;
         virtual void clear() = 0;
     };
 
     // A Pool is just a vector (contiguous data) of objects of type T
     template <typename T>
-    class Pool : public AbstractPool
+    class Pool : public BasePool
     {
     public:
         Pool(int capacity = 100) { Resize(capacity); }
