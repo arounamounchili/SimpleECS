@@ -118,7 +118,7 @@ namespace SimpleECS
     {
         if (!HasSystem<T>())
         {
-            return;
+            throw std::runtime_error(std::string("Failed to get system: ") + typeid(T).name());
         }
 
         auto it = m_systems.find(std::type_index(typeid(T)));
