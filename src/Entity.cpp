@@ -1,4 +1,5 @@
 #include "Entity.hpp"
+#include "World.hpp"
 
 namespace SimpleECS
 {
@@ -84,7 +85,13 @@ namespace SimpleECS
 
     void EntityManager::KillEntity(Entity e)
     {
-        m_world.KillEntity();
+        m_world.DestroyEntity(e);
+    }
+
+    const ComponentMask &EntityManager::GetComponentMask(Entity e) const
+    {
+        const auto id = e.GetId();
+        return m_componentMasks[id];
     }
 
     void EntityManager::TagEntity(Entity e, std::string tag)

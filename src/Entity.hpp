@@ -80,6 +80,8 @@ namespace SimpleECS
         template <typename T>
         T &GetComponent(Entity e) const;
 
+        const ComponentMask &GetComponentMask(Entity e) const;
+
         /* Tag management */
         void TagEntity(Entity e, std::string tag);
         bool HasTag(std::string tag) const;
