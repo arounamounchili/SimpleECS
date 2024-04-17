@@ -1,4 +1,6 @@
 #include "System.hpp"
+#include "World.hpp"
+#include <algorithm>
 
 namespace SimpleECS
 {
@@ -14,6 +16,11 @@ namespace SimpleECS
                              [&e](Entity other)
                              { return e == other; }),
                          m_entities.end());
+    }
+
+    World &System::GetWorld() const
+    {
+        return *m_world;
     }
 
     void SystemManager::AddToSystems(Entity e)

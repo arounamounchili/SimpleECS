@@ -28,6 +28,9 @@ namespace SimpleECS
         void RemoveEntity(Entity e);
         const ComponentMask &GetComponentMask() const { return m_componentMask; }
 
+    protected:
+        World &GetWorld() const;
+
     private:
         // Which components an entity must have in order for the system to process the entity
         ComponentMask m_componentMask;
