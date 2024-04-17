@@ -66,4 +66,6 @@ int main()
         world.Update();
         world.GetSystemManager().GetSystem<MovementSystem>().Update();
     }
+
+    return 0;
 }
