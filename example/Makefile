@@ -1,7 +1,8 @@
 CC = g++
 COMPILER_FLAGS = -Wall -Wfatal-errors
 LANG_STD = -std=c++17
-SRC_FILES = ../src/*.cpp
+SRC_FILES = ./main.cpp \
+			../src/*.cpp
 OBJ_NAME = example
 
 default: build run clean
