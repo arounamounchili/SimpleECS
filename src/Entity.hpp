@@ -145,7 +145,7 @@ namespace SimpleECS
         const auto componentId = Component<T>::GetId();
         const auto entityId = e.GetId();
 
-        if (entityId >= m_componentPools.size())
+        if (componentId >= m_componentPools.size())
         {
             m_componentPools.resize(componentId + 1, nullptr);
         }
@@ -157,7 +157,7 @@ namespace SimpleECS
         }
 
         std::shared_ptr<Pool<T>> componentPool = std::static_pointer_cast<Pool<T>>(m_componentPools[componentId]);
-        componentPool->set(entityId, component);
+        componentPool->Set(entityId, component);
         m_componentMasks[entityId].set(componentId);
     }
 
@@ -190,7 +190,7 @@ namespace SimpleECS
         const auto entityId = e.GetId();
 
         auto componentPool = std::static_pointer_cast<Pool<T>>(m_componentPools[componentId]);
-        return componentPool->get(entityId);
+        return componentPool->Get(entityId);
     }
 }
 
