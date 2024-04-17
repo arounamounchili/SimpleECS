@@ -20,7 +20,7 @@ namespace SimpleECS
     class Entity
     {
     public:
-        Entity(EntityIdType id) : m_id{id} {};
+        Entity(EntityIdType id = 0) : m_id{id} {};
         Entity(const Entity &) = default;
         Entity &operator=(const Entity &) = default;
 
