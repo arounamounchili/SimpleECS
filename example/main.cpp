@@ -47,7 +47,7 @@ public:
             std::cout << "Position (x: " << position.x << " , y: " << position.y << ")" << std::endl;
 
             motion.vx += motion.ax * dt;
-            motion.vy += motion.ax * dt;
+            motion.vy += motion.ay * dt;
             std::cout << "Velocity (vx: " << motion.vx << " , vy: " << motion.vy << ")" << std::endl;
         }
     }
