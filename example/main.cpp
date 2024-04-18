@@ -35,19 +35,19 @@ public:
         requireComponent<MotionComponent>();
     }
 
-    void Update()
+    void Update(unsigned int dt)
     {
         for (auto entity : GetEntities())
         {
             auto &position = entity.GetComponent<TransformComponent>();
             auto &motion = entity.GetComponent<MotionComponent>();
 
-            position.x += motion.vx;
-            position.y += motion.vy;
+            position.x += motion.vx * dt;
+            position.y += motion.vy * dt;
             std::cout << "Position (x: " << position.x << " , y: " << position.y << ")" << std::endl;
 
-            motion.vx += motion.ax;
-            motion.vy += motion.ax;
+            motion.vx += motion.ax * dt;
+            motion.vy += motion.ax * dt;
             std::cout << "Velocity (vx: " << motion.vx << " , vy: " << motion.vy << ")" << std::endl;
         }
     }
@@ -58,13 +58,15 @@ int main()
     World world;
     auto entity = world.CreateEntity();
     entity.AddComponent<TransformComponent>(50, 50);
-    entity.AddComponent<MotionComponent>(25, 25, 10, 10);
+    entity.AddComponent<MotionComponent>(10, 0, 5, 0);
     world.GetSystemManager().AddSystem<MovementSystem>();
+
+    unsigned dt = 1; // Assuming dt = 1
 
     for (int i = 0; i < 5; i++)
     {
         world.Update();
-        world.GetSystemManager().GetSystem<MovementSystem>().Update();
+        world.GetSystemManager().GetSystem<MovementSystem>().Update(dt);
     }
 
     return 0;
